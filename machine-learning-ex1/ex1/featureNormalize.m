@@ -13,10 +13,10 @@ sigma = zeros(1, size(X, 2));
 % ====================== YOUR CODE HERE ======================
 % Instructions: First, for each feature dimension, compute the mean
 %               of the feature and subtract it from the dataset,
-%               storing the mean value in mu. Next, compute the 
+%               '==storing the mean value in mu=='. Next, compute the 
 %               standard deviation of each feature and divide
 %               each feature by it's standard deviation, storing
-%               the standard deviation in sigma. 
+%               the ===standard deviation in sigma=====. 
 %
 %               Note that X is a matrix where each column is a 
 %               feature and each row is an example. You need 
@@ -27,9 +27,12 @@ sigma = zeros(1, size(X, 2));
 %       
 
 
-
-
-
+mu = mean(X);
+sigma = std(X);
+m = size(X, 1); % number of example sets
+for i = 1 : m
+	X_norm(i, :) = (X(i, :) - mu) ./ sigma;
+endfor;
 
 
 
