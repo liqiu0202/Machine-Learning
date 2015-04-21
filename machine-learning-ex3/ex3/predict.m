@@ -22,11 +22,16 @@ p = zeros(size(X, 1), 1);
 %
 
 
+X = [ones(m, 1), X]; % add bias
+Z2 = X * Theta1';
+A2 = sigmoid( Z2 ); % get hidden unit
 
+A2 = [ones(m, 1), A2]; % add bias
 
+Z3 = A2 * Theta2';
+A3 = sigmoid( Z3 );
 
-
-
+[vals, p] = max(A3, [], 2);
 
 
 % =========================================================================
