@@ -62,13 +62,40 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+for t = 1:m 
+%forward-propagation
+  a1 = X(t, :)';
+  z2 = Theta1 * [1; a1];
+  a2 = sigmoid(z2);
+  z3 = Theta2 * [1; a2];
+  a3 = sigmoid(z3);
+  yt = zeros(num_labels, 1);
+  yt( y(t) ) = 1;
+  %compute J
+  for k = 1:num_labels
+    J += -yt(k) * log( a3(k) ) - (1 - yt(k)) * log( 1 - a3(k) );
+  endfor;
 
+%backward-propagation, do not need to compute delta1
+  delta3 = a3 - yt;
+  %skip bias term dcost/dz0
+  delta2 = (Theta2' * delta3)(2:end) .* sigmoidGradient( z2 );
+  %a0 = 1
+  Theta2_grad += delta3 * [1; a2]';
+  Theta1_grad += delta2 * [1; a1]';
+endfor;
 
-
-
-
-
-
+J = J / m + lambda / (2 * m) * ( sum( (Theta1(:,2:end).^2)(:) ) ...
+ + sum( (Theta2(:,2:end).^2)(:) ) );
+ 
+Theta2_grad /= m;
+Theta1_grad /= m;
+%add penalty for j > 1
+Theta2_grad(:, 2:end) += lambda/m * Theta2(:, 2:end);
+Theta1_grad(:, 2:end) += lambda/m * Theta1(:, 2:end);
+ 
+% back propagation
+  
 
 
 
