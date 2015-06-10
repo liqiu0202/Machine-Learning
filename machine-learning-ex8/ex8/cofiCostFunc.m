@@ -40,17 +40,16 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+%Pred = movies x users
+Pred = X * Theta';
 
 
+J = sum( (((Pred - Y).* R) .^ 2)(:) ) / 2 ... 
+  +lambda / 2 * sum( (Theta.^2)(:) ) + lambda / 2 * sum((X.^2)(:));
 
-
-
-
-
-
-
-
-
+X_grad = ( (Pred - Y ).* R ) * Theta + lambda * X;
+  
+Theta_grad = ( (Pred - Y) .*R )' * X + lambda * Theta;
 
 
 
